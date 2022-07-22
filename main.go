@@ -8,6 +8,7 @@ import (
 func main() {
 	fmt.Println(models.Db)
 
+	// test
 	u := &models.User{}
 	u.Name = "test"
 	u.Email = "test@example.com"
