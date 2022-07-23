@@ -1,10 +1,13 @@
 package models
 
 import (
+	"crypto/sha1"
 	"database/sql"
 	"fmt"
 	"log"
 	"todo_app/config"
+
+	"github.com/google/uuid"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -15,6 +18,7 @@ var err error
 
 const (
 	tabeleNameUser = "users"
+	tabeleNameTodo = "todos"
 )
 
 func init() {
@@ -32,4 +36,21 @@ func init() {
 		created_at DATETIME)`, tabeleNameUser)
 
 	Db.Exec(cmdU)
+
+	cmdT := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		content TEXT,
+		user_id INTEGER,
+		created_at DATETIME)`, tabeleNameTodo)
+	Db.Exec(cmdT)
+}
+
+func cretaeUUID() (uuidobj uuid.UUID) {
+	uuidobj, _ = uuid.NewUUID()
+	return uuidobj
+}
+
+func Encrpt(plaintext string) (cryptext string) {
+	cryptext = fmt.Sprintf("%x", sha1.Sum([]byte(plaintext)))
+	return cryptext
 }
