@@ -58,8 +58,7 @@ func main() {
 		}
 	*/
 
-	t, _ := models.GeTodo(1)
-	t.Content = "updatetodo"
-	t.UpdateTodo()
+	t, _ := models.GeTodo(3)
+	t.DeleteTodo()
 
 }
