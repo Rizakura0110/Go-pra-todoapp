@@ -17,8 +17,9 @@ var Db *sql.DB
 var err error
 
 const (
-	tabeleNameUser = "users"
-	tabeleNameTodo = "todos"
+	tabeleNameUser    = "users"
+	tabeleNameTodo    = "todos"
+	tabeleNameSession = "sessions"
 )
 
 func init() {
@@ -43,9 +44,18 @@ func init() {
 		user_id INTEGER,
 		created_at DATETIME)`, tabeleNameTodo)
 	Db.Exec(cmdT)
+
+	cmdS := fmt.Sprintf(` CREATE TABLE IF NOT EXISTS %s(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		uuid STRING NOT NULL UNIQUE,
+		email STRING,
+		user_id INTEGER,
+		created_at DATETIME)`, tabeleNameSession,
+	)
+	Db.Exec(cmdS)
 }
 
-func cretaeUUID() (uuidobj uuid.UUID) {
+func createUUID() (uuidobj uuid.UUID) {
 	uuidobj, _ = uuid.NewUUID()
 	return uuidobj
 }
